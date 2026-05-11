@@ -1,7 +1,25 @@
-export function Button({ children, disabled, clickHandler }) {
+import { twMerge } from "tailwind-merge";
+
+const BUTTON_VARIANTS = {
+  primary: "bg-indigo-500 text-white  hover:bg-indigo-400",
+  secondary: "bg-zinc-700 text-zinc-400 hover:bg-zinc-600",
+  ghost_destructive: "text-red-800 hover:bg-red-800 hover:text-red-200",
+};
+
+export function Button({
+  children,
+  variant = "primary",
+  className,
+  disabled,
+  clickHandler,
+}) {
   return (
     <button
-      className="rounded bg-indigo-500 px-2 py-1 font-medium text-indigo-50 transition-colors hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-30"
+      className={twMerge(
+        "flex rounded px-2 py-1 transition-colors disabled:cursor-not-allowed disabled:opacity-30",
+        BUTTON_VARIANTS[variant],
+        className
+      )}
       disabled={disabled}
       onClick={clickHandler}
     >

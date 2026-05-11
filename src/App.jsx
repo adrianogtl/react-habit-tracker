@@ -21,7 +21,7 @@ function App() {
   };
 
   return (
-    <div className="m-auto grid max-w-3xl gap-4 p-4">
+    <div className="m-auto grid max-w-2xl gap-4 p-4">
       <Header />
       <Form addHabit={addHabit} />
       <List habits={habits} deleteHabit={deleteHabit} />
