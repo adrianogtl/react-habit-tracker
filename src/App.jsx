@@ -1,5 +1,11 @@
+import { Header } from "./components/Header.jsx";
+
 function App() {
-  return <h1>Hello world!</h1>;
+  return (
+    <div className="m-auto max-w-3xl p-4">
+      <Header />
+    </div>
+  );
 }
 
 export default App;
