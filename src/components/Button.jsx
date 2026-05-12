@@ -2,7 +2,8 @@ import { twMerge } from "tailwind-merge";
 
 const BUTTON_VARIANTS = {
   primary: "bg-indigo-500 text-white  hover:bg-indigo-400",
-  secondary: "bg-zinc-700 text-zinc-400 hover:bg-zinc-600",
+  secondary:
+    "bg-zinc-400 dark:bg-zinc-700  text-white dark:text-zinc-400 hover:bg-zinc-300 dark:hover:bg-zinc-600",
   ghost_destructive: "text-red-800 hover:bg-red-800 hover:text-red-200",
 };
 
