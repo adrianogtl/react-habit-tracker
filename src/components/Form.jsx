@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button } from "./Button.jsx";
+import { useHabits } from "../hooks/useHabits.js";
 
-export function Form({ addHabit }) {
+export function Form() {
   const [habitName, setHabitName] = useState("");
+  const { addHabit } = useHabits();
 
   const isInvalidInput =
     habitName.trim().length < 3 || habitName.trim().length > 30;

@@ -1,7 +1,10 @@
 import { Button } from "./Button.jsx";
 import { format, isToday } from "date-fns";
+import { useHabits } from "../hooks/useHabits.js";
 
-export function Header({ habits, visibleDates, onPrev, onNext }) {
+export function Header({ visibleDates, onPrev, onNext }) {
+  const { habits } = useHabits();
+
   const weekRange = `${format(visibleDates[0], "MMM d")} - ${format(visibleDates.at(-1), "MMM d")}`;
 
   const countCompleteToday = () => {
