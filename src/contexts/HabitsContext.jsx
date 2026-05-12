@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { isSameDay } from "date-fns";
 import { HabitsContext } from "../hooks/useHabits.js";
+import { useLocalStorage } from "../hooks/useLocalStorage.js";
 
 export function HabitsProvider({ children }) {
-  const [habits, setHabits] = useState([]);
+  const [habits, setHabits] = useLocalStorage("habits", []);
   const addHabit = (habitName) => {
     const newHabit = {
       id: crypto.randomUUID(),
