@@ -4,6 +4,8 @@ import {
   endOfWeek,
   format,
   isSameDay,
+  subDays,
+  isFuture,
 } from "date-fns";
 import { Button } from "./Button.jsx";
 
@@ -39,12 +41,28 @@ function Item({ habit, deleteHabit, toggleCompletion }) {
     end: endOfWeek(today),
   });
 
+  const getStreak = () => {
+    let streak = 0;
+    let date = new Date();
+    while (habit.completions.some((d) => isSameDay(d, date))) {
+      streak++;
+      date = subDays(date, 1);
+    }
+
+    return streak;
+  };
+
   return (
     <section className="grid gap-3 rounded-xl bg-zinc-100 p-4 dark:bg-zinc-800">
       <div className="flex justify-between">
-        <h2 className="text-dec font-medium capitalize dark:text-white">
-          {habit.name}
-        </h2>
+        <div className="flex gap-1">
+          <h2 className="font-medium capitalize dark:text-white">
+            {habit.name}
+          </h2>
+          {getStreak() > 0 && (
+            <span className="text-amber-600">🔥{getStreak()}</span>
+          )}
+        </div>
         <Button
           variant="ghost_destructive"
           className="text-sm"
@@ -58,6 +76,7 @@ function Item({ habit, deleteHabit, toggleCompletion }) {
           return (
             <Button
               key={date.toISOString()}
+              disabled={isFuture(date)}
               variant={
                 habit.completions.some((d) => isSameDay(d, date))
                   ? "primary"
