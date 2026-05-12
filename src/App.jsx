@@ -1,6 +1,7 @@
 import { Header } from "./components/Header.jsx";
 import { Form } from "./components/Form.jsx";
 import { List } from "./components/List.jsx";
+import { Footer } from "./components/Footer.jsx";
 import { useState } from "react";
 import {
   addWeeks,
@@ -56,20 +57,23 @@ function App() {
   };
 
   return (
-    <div className="m-auto grid max-w-2xl gap-4 p-4">
-      <Header
-        habits={habits}
-        visibleDates={visibleDates}
-        onPrev={onPrev}
-        onNext={onNext}
-      />
-      <Form addHabit={addHabit} />
-      <List
-        habits={habits}
-        visibleDates={visibleDates}
-        deleteHabit={deleteHabit}
-        toggleCompletion={toggleCompletion}
-      />
+    <div className="m-auto flex min-h-screen max-w-2xl flex-col gap-6 p-4">
+      <div className="flex flex-1 flex-col gap-4">
+        <Header
+          habits={habits}
+          visibleDates={visibleDates}
+          onPrev={onPrev}
+          onNext={onNext}
+        />
+        <Form addHabit={addHabit} />
+        <List
+          habits={habits}
+          visibleDates={visibleDates}
+          deleteHabit={deleteHabit}
+          toggleCompletion={toggleCompletion}
+        />
+      </div>
+      <Footer />
     </div>
   );
 }
