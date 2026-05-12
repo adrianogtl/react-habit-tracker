@@ -42,7 +42,7 @@ function App() {
 
   return (
     <div className="m-auto grid max-w-2xl gap-4 p-4">
-      <Header />
+      <Header habits={habits} />
       <Form addHabit={addHabit} />
       <List
         habits={habits}
