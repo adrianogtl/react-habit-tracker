@@ -1,7 +1,9 @@
-import { isToday } from "date-fns";
 import { Button } from "./Button.jsx";
+import { format, isToday } from "date-fns";
 
-export function Header({ habits }) {
+export function Header({ habits, visibleDates, onPrev, onNext }) {
+  const weekRange = `${format(visibleDates[0], "MMM d")} - ${format(visibleDates.at(-1), "MMM d")}`;
+
   const countCompleteToday = () => {
     return habits.filter((habit) => {
       return habit.completions.some((d) => isToday(d));
@@ -19,10 +21,15 @@ export function Header({ habits }) {
         </span>
       </div>
       <div className="flex flex-col items-end gap-1">
-        <span className="text-sm text-zinc-400">May 11 - May 17</span>
+        <span className="text-sm text-zinc-400">{weekRange}</span>
         <div className="flex gap-3">
-          <Button>Prev</Button>
-          <Button>Next</Button>
+          <Button clickHandler={onPrev}>Prev</Button>
+          <Button
+            disabled={visibleDates.some((d) => isToday(d))}
+            clickHandler={onNext}
+          >
+            Next
+          </Button>
         </div>
       </div>
     </header>

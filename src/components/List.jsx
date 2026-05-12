@@ -1,15 +1,7 @@
-import {
-  eachDayOfInterval,
-  startOfWeek,
-  endOfWeek,
-  format,
-  isSameDay,
-  subDays,
-  isFuture,
-} from "date-fns";
+import { format, isSameDay, subDays, isFuture } from "date-fns";
 import { Button } from "./Button.jsx";
 
-export function List({ habits, deleteHabit, toggleCompletion }) {
+export function List({ habits, visibleDates, deleteHabit, toggleCompletion }) {
   if (habits.length === 0) {
     return (
       <p className="text-center text-zinc-400">
@@ -25,6 +17,7 @@ export function List({ habits, deleteHabit, toggleCompletion }) {
           <Item
             key={habit.id}
             habit={habit}
+            visibleDates={visibleDates}
             deleteHabit={deleteHabit}
             toggleCompletion={toggleCompletion}
           />
@@ -34,13 +27,7 @@ export function List({ habits, deleteHabit, toggleCompletion }) {
   );
 }
 
-function Item({ habit, deleteHabit, toggleCompletion }) {
-  const today = new Date();
-  const visibleDates = eachDayOfInterval({
-    start: startOfWeek(today),
-    end: endOfWeek(today),
-  });
-
+function Item({ habit, visibleDates, deleteHabit, toggleCompletion }) {
   const getStreak = () => {
     let streak = 0;
     let date = new Date();

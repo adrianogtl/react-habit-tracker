@@ -2,10 +2,25 @@ import { Header } from "./components/Header.jsx";
 import { Form } from "./components/Form.jsx";
 import { List } from "./components/List.jsx";
 import { useState } from "react";
-import { isSameDay } from "date-fns";
+import {
+  addWeeks,
+  eachDayOfInterval,
+  endOfWeek,
+  isSameDay,
+  startOfWeek,
+} from "date-fns";
 
 function App() {
   const [habits, setHabits] = useState([]);
+  const [weekOffSet, setWeekOffSet] = useState(0);
+  const week = addWeeks(new Date(), weekOffSet);
+  const visibleDates = eachDayOfInterval({
+    start: startOfWeek(week),
+    end: endOfWeek(week),
+  });
+
+  const onPrev = () => setWeekOffSet((curr) => curr - 1);
+  const onNext = () => setWeekOffSet((curr) => curr + 1);
 
   const addHabit = (habitName) => {
     const newHabit = {
@@ -42,10 +57,16 @@ function App() {
 
   return (
     <div className="m-auto grid max-w-2xl gap-4 p-4">
-      <Header habits={habits} />
+      <Header
+        habits={habits}
+        visibleDates={visibleDates}
+        onPrev={onPrev}
+        onNext={onNext}
+      />
       <Form addHabit={addHabit} />
       <List
         habits={habits}
+        visibleDates={visibleDates}
         deleteHabit={deleteHabit}
         toggleCompletion={toggleCompletion}
       />
