@@ -1,7 +1,13 @@
-import { eachDayOfInterval, startOfWeek, endOfWeek, format } from "date-fns";
+import {
+  eachDayOfInterval,
+  startOfWeek,
+  endOfWeek,
+  format,
+  isSameDay,
+} from "date-fns";
 import { Button } from "./Button.jsx";
 
-export function List({ habits, deleteHabit }) {
+export function List({ habits, deleteHabit, toggleCompletion }) {
   if (habits.length === 0) {
     return (
       <p className="text-center text-zinc-400">
@@ -13,13 +19,20 @@ export function List({ habits, deleteHabit }) {
   return (
     <main className="grid gap-3">
       {habits.map((habit) => {
-        return <Item key={habit.id} habit={habit} deleteHabit={deleteHabit} />;
+        return (
+          <Item
+            key={habit.id}
+            habit={habit}
+            deleteHabit={deleteHabit}
+            toggleCompletion={toggleCompletion}
+          />
+        );
       })}
     </main>
   );
 }
 
-function Item({ habit, deleteHabit }) {
+function Item({ habit, deleteHabit, toggleCompletion }) {
   const today = new Date();
   const visibleDates = eachDayOfInterval({
     start: startOfWeek(today),
@@ -45,8 +58,13 @@ function Item({ habit, deleteHabit }) {
           return (
             <Button
               key={date.toISOString()}
-              variant="secondary"
+              variant={
+                habit.completions.some((d) => isSameDay(d, date))
+                  ? "primary"
+                  : "secondary"
+              }
               className="flex-1 flex-col rounded-lg"
+              clickHandler={() => toggleCompletion(habit.id, date)}
             >
               <span className="font-medium">{format(date, "eee")}</span>
               <span>{format(date, "d")}</span>
