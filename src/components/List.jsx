@@ -1,7 +1,11 @@
 import { format, isSameDay, subDays, isFuture } from "date-fns";
 import { Button } from "./Button.jsx";
+import { useHabits } from "../hooks/useHabits.js";
+import { useWeek } from "../hooks/useWeek.js";
 
-export function List({ habits, visibleDates, deleteHabit, toggleCompletion }) {
+export function List() {
+  const { habits } = useHabits();
+
   if (habits.length === 0) {
     return (
       <p className="text-center text-zinc-400">
@@ -13,21 +17,16 @@ export function List({ habits, visibleDates, deleteHabit, toggleCompletion }) {
   return (
     <main className="grid gap-3">
       {habits.map((habit) => {
-        return (
-          <Item
-            key={habit.id}
-            habit={habit}
-            visibleDates={visibleDates}
-            deleteHabit={deleteHabit}
-            toggleCompletion={toggleCompletion}
-          />
-        );
+        return <Item key={habit.id} habit={habit} />;
       })}
     </main>
   );
 }
 
-function Item({ habit, visibleDates, deleteHabit, toggleCompletion }) {
+function Item({ habit }) {
+  const { toggleCompletion, deleteHabit } = useHabits();
+  const { visibleDates } = useWeek();
+
   const getStreak = () => {
     let streak = 0;
     let date = new Date();
